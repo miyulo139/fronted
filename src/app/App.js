@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
-import AppHeader from "../common/AppHeader";
+// import { Route, Switch } from "react-router-dom";
+// import AppHeader from "../common/AppHeader";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Login from "../user/login/Login";
 import Profile from "../user/profile/Profile";
 import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler";
@@ -11,7 +12,7 @@ import { ACCESS_TOKEN } from "../constants";
 import PrivateRoute from "../common/PrivateRoute";
 import Alert from "react-s-alert";
 import "react-s-alert/dist/s-alert-default.css";
-import "react-s-alert/dist/s-alert-css-effects/slide.css";
+//import "react-s-alert/dist/s-alert-css-effects/slide.css";
 import "./App.css";
 
 class App extends Component {
@@ -66,43 +67,68 @@ class App extends Component {
     }
 
     return (
-      <div className="app">
-        <div className="app-top-box">
-          <AppHeader
-            authenticated={this.state.authenticated}
-            onLogout={this.handleLogout}
-          />
-        </div>
-        <div className="app-body">
-          <Switch>
+      // <div className="app">
+      //   {/* <div className="app-top-box"> */}
+      //     {/* <AppHeader
+      //       authenticated={this.state.authenticated}
+      //       onLogout={this.handleLogout}
+      //     /> */}
+      //   {/* </div> */}
+      //   <div className="app-body">
+      //     <Switch>
+      //       <Route exact path="/" component={Login}></Route>
+      //       <PrivateRoute
+      //         path="/profile"
+      //         authenticated={this.state.authenticated}
+      //         currentUser={this.state.currentUser}
+      //         component={Profile}
+      //       ></PrivateRoute>
+      //       <Route
+      //         path="/login"
+      //         render={(props) => (
+      //           <Login authenticated={this.state.authenticated} {...props} />
+      //         )}
+      //       ></Route>
+      //       <Route
+      //         path="/oauth2/redirect"
+      //         component={OAuth2RedirectHandler}
+      //       ></Route>
+      //       <Route component={NotFound}></Route>
+      //     </Switch>
+      //   </div>
+      //   <Alert
+      //     stack={{ limit: 3 }}
+      //     timeout={3000}
+      //     position="top-right"
+      //     effect="slide"
+      //     offset={65}
+      //   />
+      // </div>
+
+      <Router basename={process.env.PUBLIC_URL}>
+              <Switch>
             <Route exact path="/" component={Login}></Route>
-            <PrivateRoute
-              path="/profile"
-              authenticated={this.state.authenticated}
-              currentUser={this.state.currentUser}
-              component={Profile}
-            ></PrivateRoute>
-            <Route
-              path="/login"
-              render={(props) => (
+             <PrivateRoute
+               path="/profile"
+               authenticated={this.state.authenticated}
+               currentUser={this.state.currentUser}
+               component={Profile}
+             ></PrivateRoute>
+             <Route
+               path="/login"
+               render={(props) => (
                 <Login authenticated={this.state.authenticated} {...props} />
-              )}
-            ></Route>
-            <Route
-              path="/oauth2/redirect"
-              component={OAuth2RedirectHandler}
-            ></Route>
-            <Route component={NotFound}></Route>
-          </Switch>
-        </div>
-        <Alert
-          stack={{ limit: 3 }}
-          timeout={3000}
-          position="top-right"
-          effect="slide"
-          offset={65}
-        />
-      </div>
+               )}
+             ></Route>
+             <Route
+               path="/oauth2/redirect"
+               component={OAuth2RedirectHandler}
+             ></Route>
+             <Route component={NotFound}></Route>
+           </Switch> 
+      </Router>
+
+      // <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
     );
   }
 }
